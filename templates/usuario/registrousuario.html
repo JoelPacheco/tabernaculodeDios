@@ -1,0 +1,143 @@
+{% extends 'headerbasic.html' %}
+{% block content %}
+    <div class="tabbable">
+        <div class="tab-content">
+            <form id="formregistrousuario" name="formregistrousuario" method="post" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Tipo de usuario: <span class="symbol required"></span>
+                            </label>
+                            <select id="tipousuario" name="tipousuario" class="form-control search-select"
+                                    placeholder="SELECCIONE">
+                                <option value=""></option>
+                                {% for tipousuario in listaTipoUsuario %}
+                                    <option value="{{ tipousuario.id }}">{{ tipousuario.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Nombres: <span class="symbol required"></span>
+                            </label>
+                            <input class="form-control tooltips" placeholder="Ingrese nombre" type="text"
+                                   name="nombre" id="nombre">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Apellidos: <span class="symbol required"></span>
+                            </label>
+                            <input class="form-control tooltips" placeholder="Ingrese apellidos" type="text"
+                                   name="apellidos" id="apellidos">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Tipo de documento: <span class="symbol required"></span>
+                            </label>
+                            <select id="tipodocumento" name="tipodocumento" class="form-control">
+                                {% for tipodocumento in listaTipoDocumento %}
+                                    <option value={{ tipodocumento.id }}>{{ tipodocumento.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Numero de documento: <span class="symbol required"></span>
+                            </label>
+                            <input class="form-control tooltips" placeholder="Numero de documento" type="text"
+                                   name="numerodocumento" id="numerodocumento" maxlength="8">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Fecha de Nacimiento: <span class="symbol required"></span>
+                            </label>
+
+                                <span class="input-icon input-icon-right">
+                                <input id="fechanacimiento" name="fechanacimiento" type="text"
+                                       data-date-format="yyyy-mm-dd"
+                                       class="form-control">
+                                        <i class="fa fa-calendar"></i> </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Correo electr&oacute;nico:
+                            </label>
+                            <input class="form-control tooltips" placeholder="ejemplo@tudominio.com" type="text"
+                                   name="correoelectronico" id="correoelectronico">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Celular:
+                            </label>
+                            <input class="form-control tooltips" placeholder="511999999999 o 999999999" type="text"
+                                   name="celular" id="celular" maxlength="12">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Tel&eacute;fono:
+                            </label>
+                            <input class="form-control tooltips" placeholder="5114444444 o 4444444" type="text"
+                                   name="telefono" id="telefono" maxlength="12">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="form-field-select-3">
+                                Ubigeo: <span class="symbol required"></span>
+                            </label>
+                            <br/>
+                            <input type="hidden" name="ubigeo" id="ubigeo" style="width: 100%;"
+                                   data-placeholder="Depatamento,Provincia,Distrito"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Direcci&oacute;n: <span class="symbol required"></span>
+                            </label>
+                            <input class="form-control tooltips" placeholder="Direcci&oacute;n" type="text"
+                                   name="direccion" id="direccion">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn-success btn btn-lg">Registrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

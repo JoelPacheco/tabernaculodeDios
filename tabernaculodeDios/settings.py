@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -61,10 +62,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'TABERNACULODEDIOS',
-        'USER':'admin',
-        'PASSWORD':'adminadmin',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'USER': 'admin',
+        'PASSWORD': 'adminadmin',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -74,6 +75,8 @@ DATABASES = {
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+
+DATE_INPUT_FORMATS = ('%d-%m-%Y', '%Y-%m-%d')
 
 USE_I18N = True
 
