@@ -1,138 +1,241 @@
-<form id="formregistrousuario" name="formregistrousuario" method="post" action="">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Tipo de usuario: <span class="symbol required"></span>
-                </label>
-                <select id="tipousuario" name="tipousuario" class="form-control search-select"
-                        placeholder="SELECCIONE">
-                    <option value=""></option>
-                    {% for tipousuario in listaTipoUsuario %}
+<form id="formregistrousuario" name="formregistrousuario" method="post" action="registrousuario">
+<input type="hidden" name="metodo" value="actualizar">
+<input type="hidden" name="id" value="{{ datosUsuario.id }}">
+{% csrf_token %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Tipo de usuario: <span class="symbol required"></span>
+            </label>
+            <select id="tipousuario" name="tipousuario" class="form-control search-select"
+                    placeholder="SELECCIONE">
+                <option value=""></option>
+                {% for tipousuario in listaTipoUsuario %}
+                    {% if tipousuario.id != datosUsuario.tipousuario_id %}
                         <option value="{{ tipousuario.id }}">{{ tipousuario.nombre }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+                    {% else %}
+                        <option value="{{ tipousuario.id }}" selected="selected">{{ tipousuario.nombre }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Nombres: <span class="symbol required"></span>
-                </label>
-                <input class="form-control tooltips" placeholder="Ingrese nombre" type="text"
-                       name="nombre" id="nombre" value="{{ datosUsuario.nombres }}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Apellidos: <span class="symbol required"></span>
-                </label>
-                <input class="form-control tooltips" placeholder="Ingrese apellidos" type="text"
-                       name="apellidos" id="apellidos" value="{{ datosUsuario.apellidos }}">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Tipo de documento: <span class="symbol required"></span>
-                </label>
-                <select id="tipodocumento" name="tipodocumento" class="form-control">
-                    {% for tipodocumento in listaTipoDocumento %}
-                        <option value={{ tipodocumento.id }}>{{ tipodocumento.nombre }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Numero de documento: <span class="symbol required"></span>
-                </label>
-                <input class="form-control tooltips" placeholder="Numero de documento" type="text"
-                       name="numerodocumento" id="numerodocumento" value="{{ datosUsuario.numerodocumento }}"
-                       maxlength="8">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Fecha de Nacimiento: <span class="symbol required"></span>
-                </label>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Es Administrador: <span class="symbol required"></span>
+            </label>
+            <br/>
 
+            <div class="make-switch switch-large" data-on-label="<i class='fa fa-check fa-white'></i>"
+                 data-off-label="<i class='fa fa-times'></i>">
+                {% if datosUsuario.admin == False %}
+                    <input type="checkbox" id="admin" name="admin"/>
+                {% else %}
+                    <input type="checkbox" id="admin" name="admin" checked/>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Nombres: <span class="symbol required"></span>
+            </label>
+            <input class="form-control tooltips" placeholder="Ingrese nombre" type="text"
+                   name="nombre" id="nombre" value="{{ datosUsuario.nombres }}">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Apellidos: <span class="symbol required"></span>
+            </label>
+            <input class="form-control tooltips" placeholder="Ingrese apellidos" type="text"
+                   name="apellidos" id="apellidos" value="{{ datosUsuario.apellidos }}">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Tipo de documento: <span class="symbol required"></span>
+            </label>
+            <select id="tipodocumento" name="tipodocumento" class="form-control">
+                {% for tipodocumento in listaTipoDocumento %}
+                    {% if tipodocumento.id != datosUsuario.tipodocumento_id %}
+                        <option value="{{ tipodocumento.id }}">{{ tipodocumento.nombre }}</option>
+                    {% else %}
+                        <option value="{{ tipodocumento.id }}"
+                                selected="selected">{{ tipodocumento.nombre }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Numero de documento: <span class="symbol required"></span>
+            </label>
+            <input class="form-control tooltips" placeholder="Numero de documento" type="text"
+                   name="numerodocumento" id="numerodocumento" value="{{ datosUsuario.numerodocumento }}"
+                   maxlength="8">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Sexo: <span class="symbol required"></span>
+            </label>
+            <select id="sexo" name="sexo" class="form-control">
+                {% if datosUsuario.sexo == 'M' %}
+                    <option value="M" selected="selected">MASCULINO</option>
+                    <option value="F">FEMENINO</option>
+                {% else %}
+                    <option value="M">MASCULINO</option>
+                    <option value="F" selected="selected">FEMENINO</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Estado civil: <span class="symbol required"></span>
+            </label>
+            <select id="estadocivil" name="estadocivil" class="form-control">
+                {% if datosUsuario.estadocivil == 'S' %}
+                    <option value="S" selected="selected">SOLTERO</option>
+                {% else %}
+                    <option value="S">SOLTERO</option>
+                {% endif %}
+                {% if datosUsuario.estadocivil == 'C' %}
+                    <option value="C" selected="selected">CASADO</option>
+                {% else %}
+                    <option value="C">CASADO</option>
+                {% endif %}
+                {% if datosUsuario.estadocivil == 'V' %}
+                    <option value="V" selected="selected">VIUDO</option>
+                {% else %}
+                    <option value="V">VIUDO</option>
+                {% endif %}
+                {% if datosUsuario.estadocivil == 'D' %}
+                    <option value="D" selected="selected">DIVORCIADO</option>
+                {% else %}
+                    <option value="D">DIVORCIADO</option>
+                {% endif %}
+
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Fecha de Nacimiento: <span class="symbol required"></span>
+            </label>
+            <input type="hidden" id="fecha" value="{{ datosUsuario.fechanacimiento|date:"Y-m-d" }}">
                                 <span class="input-icon input-icon-right">
                                 <input id="fechanacimiento" name="fechanacimiento" type="text"
-                                       data-date-format="yyyy-mm-dd" value="{{ datosUsuario.fechanacimiento }}"
+                                       data-date-format="yyyy-mm-dd"
+                                       value="{{ datosUsuario.fechanacimiento }}"
                                        class="form-control">
                                         <i class="fa fa-calendar"></i> </span>
-            </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Correo electr&oacute;nico:
-                </label>
-                <input class="form-control tooltips" placeholder="ejemplo@tudominio.com" type="text"
-                       name="correoelectronico" id="correoelectronico" value="{{ datosUsuario.correoelectronico }}">
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Correo electr&oacute;nico:
+            </label>
+            <input class="form-control tooltips" placeholder="ejemplo@tudominio.com" type="text"
+                   name="correoelectronico" id="correoelectronico" value="{{ datosUsuario.correoelectronico }}">
 
-            </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Contrase&ntilde;a: <span class="symbol required"></span>
+            </label>
 
+            <input class="form-control" placeholder="Contrase&ntilde;a" type="password"
+                   name="password" id="password" maxlength="16">
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Celular:
-                </label>
-                <input class="form-control tooltips" placeholder="511999999999 o 999999999" type="text"
-                       name="celular" id="celular" maxlength="12" value="{{ datosUsuario.celular }}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Tel&eacute;fono:
-                </label>
-                <input class="form-control tooltips" placeholder="5114444444 o 4444444" type="text"
-                       name="telefono" id="telefono" value="{{ datosUsuario.telefono }}" maxlength="12">
-            </div>
-        </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Repita contrase&ntilde;a: <span class="symbol required"></span>
+            </label>
+            <input class="form-control" placeholder="Repita contrase&ntilde;a" type="password"
+                   name="password2" id="password2" maxlength="16">
 
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="form-field-select-3">
-                    Ubigeo: <span class="symbol required"></span>
-                </label>
-                <br/>
-                <input type="hidden" name="ubigeo" id="ubigeo" style="width: 100%;"
-                       data-placeholder="Depatamento,Provincia,Distrito"/>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Direcci&oacute;n: <span class="symbol required"></span>
-                </label>
-                <input class="form-control tooltips" placeholder="Direcci&oacute;n" type="text"
-                       name="direccion" id="direccion" value="{{ datosUsuario.direccion }}">
-            </div>
         </div>
     </div>
-    <input type="hidden" id="ubigeonombre" name="ubigeonombre" value="LIMA,LIMA,SAN MARTIN DE PORRES">
-    <button id="btn" class="btn btn-block">Probar</button>
-    <div class="row">
-        <div class="col-md-12">
-            <button type="submit" class="btn-success btn btn-lg">Registrar</button>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Celular:
+            </label>
+            <input class="form-control tooltips" placeholder="511999999999 o 999999999" type="text"
+                   name="celular" id="celular" maxlength="12" value="{{ datosUsuario.celular }}">
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Tel&eacute;fono:
+            </label>
+            <input class="form-control tooltips" placeholder="5114444444 o 4444444" type="text"
+                   name="telefono" id="telefono" value="{{ datosUsuario.telefono }}" maxlength="12">
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="form-field-select-3">
+                Ubigeo: <span class="symbol required"></span>
+            </label>
+            <br/>
+            <input type="hidden" name="ubigeo" id="ubigeo" style="width: 100%;"
+                   data-placeholder="Depatamento,Provincia,Distrito"/>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                Direcci&oacute;n: <span class="symbol required"></span>
+            </label>
+            <input class="form-control tooltips" placeholder="Direcci&oacute;n" type="text"
+                   name="direccion" id="direccion" value="{{ datosUsuario.direccion }}">
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="ubigeonombre" name="ubigeonombre" value="{{ ubigeousuario.ubigeo }}">
+<input type="hidden" id="ubigeocodigo" name="ubigeocodigo" value="{{ datosUsuario.codigoubigeo_id }}">
+
+<div class="row">
+    <div class="col-md-6">
+        <button type="submit" class="btn-success btn-lg btn-block">Actualizar</button>
+    </div>
+    <div class="col-md-6">
+        <a href="/usuario/registrousuario" class="btn-danger btn-lg btn-block text-center">Cancelar</a>
+    </div>
+</div>
 </form>

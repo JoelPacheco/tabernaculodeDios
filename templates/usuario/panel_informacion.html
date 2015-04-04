@@ -15,13 +15,10 @@
                         <div class="fileupload-preview fileupload-exists thumbnail"
                              style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                         <div class="user-image-buttons">
-																	<span class="btn btn-teal btn-file btn-sm"><span
-                                                                            class="fileupload-new"><i
-                                                                            class="fa fa-pencil"></i></span><span
-                                                                            class="fileupload-exists"><i
-                                                                            class="fa fa-pencil"></i></span>
-																		<input type="file">
-																	</span>
+							<span class="btn btn-teal btn-file btn-sm">
+                                <span class="fileupload-new"><i class="fa fa-pencil"></i></span>
+                            <span class="fileupload-exists"><i class="fa fa-pencil"></i></span>
+                                <input type="file"></span>
                             <a href="#" class="btn fileupload-exists btn-bricky btn-sm"
                                data-dismiss="fileupload">
                                 <i class="fa fa-times"></i>
@@ -54,6 +51,12 @@
                 </thead>
                 <tbody>
                 <tr>
+                    <td>Tipo de usuario:</td>
+                    <th>{{ tipoUsuario.nombre }}</th>
+                    <td><a href="#panel_edit_account" class="show-tab"><i
+                            class="fa fa-pencil edit-user-info"></i></a></td>
+                </tr>
+                <tr>
                     <td>Nombres</td>
                     <td>{{ datosUsuario.nombres }}</td>
                     <td><a href="#panel_edit_account" class="show-tab"><i
@@ -67,7 +70,7 @@
                 </tr>
                 <tr>
                     <td>Tipo de documento:</td>
-                    <td>{{ datosUsuario.tipodocumento.name }}</td>
+                    <td>{{ tipoDocumentoUsuario.nombre }}</td>
                     <td><a href="#panel_edit_account" class="show-tab"><i
                             class="fa fa-pencil edit-user-info"></i></a></td>
                 </tr>
@@ -100,7 +103,7 @@
                 <tbody>
                 <tr>
                     <td>Ubigeo</td>
-                    <td>{{ datosUsuario.codigoubigeo }}</td>
+                    <td>{{ ubigeousuario.ubigeo }}</td>
                     <td><a href="#panel_edit_account" class="show-tab"><i
                             class="fa fa-pencil edit-user-info"></i></a></td>
                 </tr>

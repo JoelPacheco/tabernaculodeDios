@@ -5,18 +5,21 @@ var registroUsuario = function () {
 
     $("#btn").click(function () {
 
-        $("#ubigeo").val("LIMA,LIMA,SAN MARTIN DE PORRES");
+
+        $("#ubigeo").val($("#ubigeocodigo").val());
+
 
     });
     // Carga la lista de ubigeo en los select o combos
     var cargarUbigeo = function () {
         //$("#ubigeo").select2();
-        var ubigeonombre = $("#ubigeonombre").val();
+        var ubigeo = $("#ubigeocodigo");
 
         var URL = "/buscarubigeopornombre";
 
         $("#ubigeo").select2({
             minimumInputLength: 5,
+            text: "dddd",
             formatInputTooShort: function () {
                 return "Ingrese 5 caracteres";
             },
@@ -26,15 +29,11 @@ var registroUsuario = function () {
                 type: "GET",
                 quietMillis: 50,
                 data: function (term) {
-                    if ($("#ubigeonombre").val() != "") {
-                        term = $("#ubigeonombre").val();
-                    }
                     return {
                         term: term.toUpperCase()
                     };
                 },
                 results: function (data) {
-
                     return {
                         results: $.map(data, function (item) {
                             return {
@@ -46,6 +45,11 @@ var registroUsuario = function () {
                 }
             }
         });
+
+        if (ubigeo != '') {
+            $("#ubigeo").val(ubigeo.val());
+            $(".select2-chosen").text($("#ubigeonombre").val());
+        }
 
 
     };
@@ -62,6 +66,8 @@ var registroUsuario = function () {
             startView: 'year',
             autoclose: true
         });
+
+        $("#fechanacimiento").val($("#fecha").val());
     };
 
     var validarNumeroDeDocumento = function () {
@@ -130,6 +136,13 @@ var registroUsuario = function () {
                 },
                 celular: {
                     digits: true
+                },
+                password: {
+                    minlength: 6
+                },
+                password2: {
+                    equalTo: "#password",
+                    minlength: 6
                 }
             },
             messages: {
@@ -161,6 +174,15 @@ var registroUsuario = function () {
                 celular: {
                     digits: "Solo n&uacute;meros"
                 },
+                password: {
+                    required: "Ingrese contrase&ntilde;a",
+                    minlength: "Ingrese como m&iacute;nimo {0} caracteres"
+                },
+                password2: {
+                    equalTo: "Las contrase&ntilde;as tienen que ser iguales",
+                    required: "Ingrese contrase&ntilde;a",
+                    minlength: "Ingrese como m&iacute;nimo {0} caracteres"
+                },
                 gender: "Please check a gender!"
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -188,6 +210,15 @@ var registroUsuario = function () {
 
                 //return true;
                 // submit form
+                var passwordActual = $("#password").val();
+                if (passwordActual == '') {
+                    passwordActual = "123456";
+                }
+                var password = $.md5(passwordActual, 'MiPasswordPersonal123456');
+
+                $("#password").val(password);
+                $("#password2").val(password);
+
                 form.submit();
             }
         });
