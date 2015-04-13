@@ -83,6 +83,13 @@ var Login = function () {
             submitHandler: function (form) {
                 successHandler1.show();
                 errorHandler1.hide();
+
+                var passwordActual = $("#password").val();
+                var password = $.md5(passwordActual, 'MiPasswordPersonal123456');
+
+                $("#password").val(password);
+
+
                 form.submit();
                 // submit form
 

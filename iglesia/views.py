@@ -11,16 +11,27 @@ from django.http import HttpResponse
 from iglesia.models import Ubigeo, TipoUsuario, Usuario, TipoDocumento
 
 
+
 # Create your views here.
 
 
 def login(request):
     if request.method == 'POST':
-
-        return redirect("/home")
-
+        pw1 = request.POST['password'];
+        if Usuario.objects.filter(correoelectronico=request.POST['correoelectronico'],
+                                  password=hashlib.sha512(request.POST['password']).hexdigest(), admin=True).exists():
+            return redirect("/home")
+        else:
+            return redirect("/?mensaje=2")
     else:
-        return render_to_response('login.html', {}, context_instance=RequestContext(request))
+
+        if request.GET.get("mensaje"):
+            if 2 == int(request.GET.get("mensaje")):
+                mensaje = crearMensajeDeError('Usuario o contrase&ntilde;a incorrecta')
+            else:
+                return render_to_response('login.html', locals(), context_instance=RequestContext(request))
+
+        return render_to_response('login.html', locals(), context_instance=RequestContext(request))
 
 
 def home(request):
@@ -140,6 +151,17 @@ def crearMensajeSatisfactorio(mensaje):
                '&times;</button>' \
                '<i class="fa fa-check-circle"></i>' \
                '<strong>Muy Bien!</strong> ' + mensaje + \
+               '</div>'
+
+    return crearDiv
+
+
+def crearMensajeDeError(mensaje):
+    crearDiv = '<div class="alert alert-danger">' \
+               '<button data-dismiss="alert" class="close">' \
+               '&times;</button>' \
+               '<i class="fa fa-check-circle"></i>' \
+               '<strong>Oh no!</strong> ' + mensaje + \
                '</div>'
 
     return crearDiv
